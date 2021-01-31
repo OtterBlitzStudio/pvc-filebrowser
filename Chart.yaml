@@ -1,0 +1,10 @@
+apiVersion: v2
+name: pvc-filebrowser
+description: A Helm chart for deploying a filebrowser to show/edit content in a pvc with a gui
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers: 
+  - name: Otter Blitz Studio
+    email: developer@otter-blitz-studio.de
+

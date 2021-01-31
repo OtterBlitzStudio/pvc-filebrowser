@@ -1,0 +1,4 @@
+version: v2
+pvc: 
+clusterIP: 
+port: 1337

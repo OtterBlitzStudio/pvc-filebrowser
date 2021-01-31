@@ -1,0 +1,24 @@
+{{- $name := printf "%s-filebrowser" .Release.Name}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{$name}}
+  namespace: {{.Release.Namespace}}
+  labels:
+    app: {{$name}}
+    component: {{$name}}
+spec:
+  selector:
+    app: {{$name}}
+    component: {{$name}}
+  type: ClusterIP
+{{- if .Values.clusterIP }}
+  clusterIP: {{.Values.clusterIP}}
+{{- else}}
+  clusterIP: None
+{{- end}}
+  ports:
+  - name: {{.Values.port | quote}}
+    port: {{.Values.port}}
+    targetPort: 80
+    

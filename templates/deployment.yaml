@@ -1,0 +1,39 @@
+{{- $name := printf "%s-filebrowser" .Release.Name}}
+{{- $image := printf "filebrowser/filebrowser:%v" .Values.version }}
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{$name}}
+  namespace: {{.Release.Namespace}}
+  labels:
+    app: {{$name}}
+    component: {{$name}}
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: {{$name}}
+      component: {{$name}}
+  template:
+    metadata:
+      labels:
+        app: {{$name}}
+        component: {{$name}}
+    spec:    
+      containers:
+      - name: {{$name}}
+        image: {{$image}}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: data
+          mountPath: /srv
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName:  {{ required "You need to set a name for the pvc you want access to, e.g. --set pvc=\"my-data\"" .Values.pvc}}
